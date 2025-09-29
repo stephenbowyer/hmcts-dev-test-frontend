@@ -1,0 +1,89 @@
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/tabs/macro.njk" import govukTabs %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
+{% extends "template.njk" %}
+
+<!-- You may want to make further use of these components: https://design-system.service.gov.uk/components/
+but ultimately it is up to you -->
+
+{% block content %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Task Status",
+        href: "/status"
+      },
+      {
+        text: taskList[0].formattedStatus,
+        href: "#"
+      }
+    ]
+  }) }}
+  <h1 class="govuk-heading-xl">Your task list</h1>
+  {% if statusType === "all" %}
+    <h2 class="govuk-heading-l">All Tasks</h2>
+  {% else %}
+    <h2 class="govuk-heading-l">{{taskList[0].formattedStatus}} Tasks</h2>
+  {% endif %}
+  
+  <!-- The freedom is yours. You can design the solution however you like, however there is a starting point provided
+  to ensure you have both services running. You may want to make use of the Gov UK Components:
+  https://design-system.service.gov.uk/components/ to add tabs and so forth :) -->
+
+  {# Build an array of summary HTML for each task #}
+  {% for task in taskList %}
+      {{ govukSummaryList({
+        card: {
+          title: {
+            text: task.id + " - " + task.title
+          },
+          actions: {
+            items: [
+              {
+                href: "/task/" + task.id,
+                text: "View/Edit/Delete Task"
+              }
+            ]
+          }
+        },
+        rows: [
+          {
+            key: { text: "ID" },
+            value: { text: task.id }
+          },
+          {
+            key: { text: "Title" },
+            value: { text: task.title }
+          },
+          {
+            key: { text: "Description" },
+            value: { html: task.description }
+          },
+          {
+            key: { text: "Status" },
+            value: { html: govukTag({
+              text: task.formattedStatus,
+              classes: task.statusClass
+            }) }
+          },
+          {
+            key: { text: "Due Date" },
+            value: { html: task.formattedDueDate }
+          }
+        ]
+      }) }}
+  {% endfor %}
+  <form action="/createtask" method="get" novalidate>
+    {{ govukButton({
+      text: "Create Task"
+    }) }}
+  </form>
+{% endblock %}

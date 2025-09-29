@@ -1,0 +1,62 @@
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/tabs/macro.njk" import govukTabs %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+
+{% extends "template.njk" %}
+
+<!-- You may want to make further use of these components: https://design-system.service.gov.uk/components/
+but ultimately it is up to you -->
+
+{% block content %}
+  {{ govukBreadcrumbs({
+    items: [
+      {
+        text: "Home",
+        href: "/"
+      },
+      {
+        text: "Task Status",
+        href: "#"
+      }
+    ]
+  }) }}
+  <h1 class="govuk-heading-xl">Your task list</h1>
+
+  <!-- The freedom is yours. You can design the solution however you like, however there is a starting point provided
+  to ensure you have both services running. You may want to make use of the Gov UK Components:
+  https://design-system.service.gov.uk/components/ to add tabs and so forth :) -->
+
+  {% set rows = [] %}
+  {% for status in statusList %}
+    {% set _ = rows.push({
+      key: { html: govukTag({
+              text: status[2],
+              classes: status[3]
+            })
+      },
+      value: { text: status[1] },
+      actions: {
+        items: [
+          {
+            href: "/status/" + status[0],
+            text: "View Tasks"
+          }
+        ]
+      }
+    }) %}
+  {% endfor %}
+
+  {{ govukSummaryList({
+    rows: rows
+  }) }}
+
+  <form action="/createtask" method="get" novalidate>
+    {{ govukButton({
+      text: "Create Task"
+    }) }}
+  </form>
+
+{% endblock %}
