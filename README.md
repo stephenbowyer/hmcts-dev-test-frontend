@@ -1,11 +1,41 @@
 # HMCTS Dev Test Frontend
-This will be the frontend for the brand new HMCTS case management system. As a potential candidate we are leaving
-this in your hands. Please refer to the brief for the complete list of tasks! Complete as much as you can and be
-as creative as you want.
 
-To begin with, you should be able to run this by running:
-1) `yarn install`
-2) `yarn webpack`
-3) `yarn start:dev` or navigate to package.json and run the script manually
+You can try the [hosted online demo here](https://peter.widearea.org:3100). Please note this has a self-signed security certificate, and you may receive a wardning about this.
 
-You can change the structure however you like! 
+## Features
+
+Allows the creation, editing and deletion of tasks.
+
+### /status/
+
+Shows a summary of the types of task statuses.
+
+### /status/all
+
+Shows a list of all tasks.
+
+### /status/{status type}
+
+Shows a list of all tasks of given status type.
+
+### /task/{id}
+
+Shows details of given status id.
+
+### /createtask
+
+Create new task.
+
+## Minimum Installation Requirements
+
+This has been tested and works with NodeJS 23 and yarn 1.22.
+
+## Installation Instructions
+
+Before installing the frontend, you must install [the backend project here](https://github.com/stephenbowyer/hmcts-dev-test-backend).
+
+git clone https://github.com/stephenbowyer/hmcts-dev-test-frontend
+cd hmcts-dev-test-frontend
+yarn install
+yarn webpack
+yarn start:dev
