@@ -36,6 +36,11 @@ glob
 
 setupDev(app, developmentMode);
 
+// not found handler
+app.use((req, res) => {
+  res.status(404).render('not-found');
+});
+
 // error handler
 app.use((err: HTTPError, req: express.Request, res: express.Response) => {
   console.log(err);
