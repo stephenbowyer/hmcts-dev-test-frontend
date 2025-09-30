@@ -34,8 +34,10 @@ This has been tested and works with NodeJS 23 and yarn 1.22.
 
 Before installing the frontend, you must install [the backend project here](https://github.com/stephenbowyer/hmcts-dev-test-backend).
 
+```
 git clone https://github.com/stephenbowyer/hmcts-dev-test-frontend
 cd hmcts-dev-test-frontend
 yarn install
 yarn webpack
 yarn start:dev
+```
